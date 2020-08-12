@@ -7,14 +7,14 @@ const path = require('path')
 const app = express()
 app.use(express.json({ extended: true }))
 
-app.use(morgan('tiny'))
-app.use('/api/auth', require('./routes/auth.routes'))
-app.use('/api/content', require('./routes/content.routes'))
-
 app.use(express.static(path.join(__dirname, 'client', 'build')))
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
 })
+
+app.use(morgan('tiny'))
+app.use('/api/auth', require('./routes/auth.routes'))
+app.use('/api/content', require('./routes/content.routes'))
 
 let port = 8080
 const MONGO_URI = "mongodb+srv://antonlapin:anton12345@cluster0.cr0gc.azure.mongodb.net/app?retryWrites=true&w=majority"
