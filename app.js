@@ -19,7 +19,7 @@ if (process.env.NODE_ENV === 'production') {
     // })
 }
 
-let port = process.env.PORT || 5000
+let port = process.env.PORT || 8080
 const MONGO_URI = config.get('mongoUri')
 
 
