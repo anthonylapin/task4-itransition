@@ -16,7 +16,7 @@ app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
 })
 
-let port = process.env.PORT || 8080
+let port = 8080
 const MONGO_URI = "mongodb+srv://antonlapin:anton12345@cluster0.cr0gc.azure.mongodb.net/app?retryWrites=true&w=majority"
 
 mongoose.connect(MONGO_URI, {
