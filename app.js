@@ -6,27 +6,22 @@ const path = require('path')
 const app = express()
 app.use(express.json({ extended: true }))
 
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, 'client', 'build')))
-}
-
-
-// app.get('*', (req, res) => {
-//     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
-// })
-
-app.use(morgan('tiny'))
 app.use('/api/auth', require('./routes/auth.routes'))
 app.use('/api/content', require('./routes/content.routes'))
+
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, 'client', 'build')))
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+    })
+}
 
 let port = process.env.PORT || 8080
 const MONGO_URI = "mongodb+srv://antonlapin:anton12345@cluster0.cr0gc.azure.mongodb.net/app?retryWrites=true&w=majority"
 
-mongoose.connect(MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true
-})
+mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
+    .then(() => console.log("Database Connected Successfully"))
+    .catch(err => console.log(err))
 
 app.listen(port, () => {
     console.log(`Server is on port ${port}`)
