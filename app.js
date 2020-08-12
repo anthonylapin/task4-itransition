@@ -33,7 +33,7 @@ mongoose.connect(process.env.MONGODB_URI || MONGO_URI, {
     useCreateIndex: true
 })
 
-app.listen(8080, () => {
+app.listen(port, () => {
     console.log(`Server is on port ${port}`)
 })
 
