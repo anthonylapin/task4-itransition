@@ -36,7 +36,7 @@ const start = async () => {
             console.log('Mongoose is connected!');
         })
 
-        app.listen(port, () => {
+        app.listen(8080, () => {
             console.log(`Server is on port ${port}`)
         })
     } catch (e) {
