@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const path = require('path')
+const config = require('config')
 
 const app = express()
 app.use(express.json({ extended: true }))
@@ -15,48 +16,27 @@ if (process.env.NODE_ENV === 'production') {
     })
 }
 
-let port = process.env.PORT || 8080
-const MONGO_URI = "mongodb+srv://antonlapin:anton12345@cluster0.cr0gc.azure.mongodb.net/app?retryWrites=true&w=majority"
+let port = process.env.PORT || config.get('port')
+const MONGO_URI = config.get('mongoUri')
 
-mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
-    .then(() => console.log("Database Connected Successfully"))
-    .catch(err => console.log(err))
+const start = async () => {
+    try {
+        await mongoose.connect(process.env.MONGODB_URI || MONGO_URI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            useCreateIndex: true
+        })
+        console.log('Database connected successfully!')
 
-app.listen(port, () => {
-    console.log(`Server is on port ${port}`)
-})
+        app.listen(port, () => {
+            console.log(`Server is on port ${port}`)
+        })
+    } catch (e) {
+        console.log(`Server error: ${e.message}`)
+        process.exit(1)
+    }
+}
 
-
-
-// const start = async () => {
-//     try {
-//         await mongoose.connect(process.env.MONGODB_URI || MONGO_URI, {
-//             useNewUrlParser: true,
-//             useUnifiedTopology: true,
-//             useCreateIndex: true
-//         })
-
-//         app.listen(8080, () => {
-//             console.log(`Server is on port ${port}`)
-//         })
-//     } catch (e) {
-//         console.log(`Server error: ${e.message}`)
-//         process.exit(1)
-//     }
-// }
-
-// process.on('uncaughtException', function (err) {
-//     console.log(" UNCAUGHT EXCEPTION ")
-//     console.log("[Inside 'uncaughtException' event] " + err.stack || err.message)
-//     process.exit(0)
-// })
-
-// process.on('SIGTERM', function () {
-//     app.close(function () {
-//         process.exit(0);
-//     })
-// })
-
-// start()
+start()
 
 

@@ -101,7 +101,7 @@ router.post('/signin',
 
             const token = jwt.sign(
                 { userId: user.id },
-                "55cbe60327f9ac5ce301eb8c0baa9f39811a4490cddb2e3ca8efd3e42a9ded3a",
+                config.get('jwtSecret'),
                 { expiresIn: '1h' }
             )
 
