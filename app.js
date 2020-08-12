@@ -16,7 +16,7 @@ app.use(morgan('tiny'))
 app.use('/api/auth', require('./routes/auth.routes'))
 app.use('/api/content', require('./routes/content.routes'))
 
-let port = 8080
+let port = process.env.PORT || 8080
 const MONGO_URI = "mongodb+srv://antonlapin:anton12345@cluster0.cr0gc.azure.mongodb.net/app?retryWrites=true&w=majority"
 
 mongoose.connect(MONGO_URI, {
