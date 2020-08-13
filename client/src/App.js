@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { AuthContext } from './context/AuthContext'
 import { useRoutes } from './routes'
 import { useAuth } from './hooks/auth.hook'
-import { Loader } from './components/Loader'
+import { LoadingIndicator } from './components/Loader'
 import { Navbar } from './components/Navbar'
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
 
   if (!ready) {
     return (
-      <Loader />
+      <LoadingIndicator />
     )
   }
 

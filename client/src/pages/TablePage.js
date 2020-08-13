@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext, useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useHttp } from '../hooks/http.hook'
 import { AuthContext } from '../context/AuthContext'
-import { Loader } from '../components/Loader'
+import { LoadingIndicator } from '../components/Loader'
 import { UserDataList } from '../components/UserDataList'
 import { Toolbar } from '../components/Toolbar'
 
@@ -41,7 +41,7 @@ export const TablePage = () => {
             if ((method === 'DELETE' || status === 'Blocked') && idsOfCheckedUsers.includes(auth.userId)) {
                 auth.logout()
             }
-            history.push('/')
+            window.location.reload(true)
         } catch (e) { }
     }
 
@@ -49,14 +49,11 @@ export const TablePage = () => {
         clearError()
     }, [clearError])
 
-    if (loading) {
-        return <Loader />
-    }
-
     return (
         <div>
             <Toolbar handler={toolbarHandler} />
             {!loading && <UserDataList users={usersData} setUsers={setUsersData} />}
+            {loading && <LoadingIndicator />}
         </div>
     )
 }
