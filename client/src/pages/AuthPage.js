@@ -26,7 +26,7 @@ export const AuthPage = () => {
 
     return (
         <div>
-            <div className="card" style={{ width: "50rem", marginLeft: "9rem", marginTop: "3rem" }}>
+            <div className="card" style={{ marginTop: "3rem" }}>
                 <div className="card-header">
                     Task #4, Itransition
                 </div>

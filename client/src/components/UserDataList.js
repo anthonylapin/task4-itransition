@@ -17,43 +17,44 @@ export const UserDataList = ({ users, setUsers }) => {
     }
 
     return (
-        <table className="table table-hover">
-
-            <thead className="thead-light">
-                <tr>
-                    <th scope="col">
-                        <p>Select/remove all</p>
-                        <input type="checkbox"
-                            name="checkAll"
-                            checked={allChecked}
-                            onChange={handleCheck} />
-                    </th>
-                    <th scope="col">ID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Created</th>
-                    <th scope="col">Last login</th>
-                    <th scope="col">Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                {users.map((user) => (
-                    <tr key={user.id}>
-                        <th scope="row">
+        <div className="table-responsive">
+            <table className="table table-hover">
+                <thead className="thead-light">
+                    <tr>
+                        <th scope="col">
+                            <p>Select/remove all</p>
                             <input type="checkbox"
-                                name={user.id}
-                                checked={user.isChecked}
+                                name="checkAll"
+                                checked={allChecked}
                                 onChange={handleCheck} />
                         </th>
-                        <td>{user.id}</td>
-                        <td>{user.fullName}</td>
-                        <td>{user.email}</td>
-                        <td>{user.created}</td>
-                        <td>{user.lastLogin}</td>
-                        <td>{user.status}</td>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Created</th>
+                        <th scope="col">Last login</th>
+                        <th scope="col">Status</th>
                     </tr>
-                ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {users.map((user) => (
+                        <tr key={user.id}>
+                            <th scope="row">
+                                <input type="checkbox"
+                                    name={user.id}
+                                    checked={user.isChecked}
+                                    onChange={handleCheck} />
+                            </th>
+                            <td>{user.id}</td>
+                            <td>{user.fullName}</td>
+                            <td>{user.email}</td>
+                            <td>{user.created}</td>
+                            <td>{user.lastLogin}</td>
+                            <td>{user.status}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
     )
 } 
