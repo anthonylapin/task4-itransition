@@ -13,6 +13,7 @@ export const TablePage = () => {
     const { token } = useContext(AuthContext)
 
     const fetchUsersData = useCallback(async () => {
+        console.log('fetchUsersdata')
         try {
             const fetched = await request('/api/content/users', 'GET', null, {
                 Authorization: `Bearer ${token}`
@@ -27,7 +28,7 @@ export const TablePage = () => {
     }, [fetchUsersData])
 
     const toolbarHandler = async (event) => {
-        console.log(event.target);
+        console.log('toolbarhandler');
 
         const status = event.target.name
         const method = event.target.value
@@ -43,12 +44,10 @@ export const TablePage = () => {
                 Authorization: `Bearer ${token}`
             })
         }
+        fetchUsersData()
         if ((method === 'DELETE' || status === 'Blocked') && idsOfCheckedUsers.includes(auth.userId)) {
             auth.logout()
         }
-
-        window.location.reload()
-
     }
     const deleteUser = async (id) => {
         await request(`/api/content/users/${id}`, 'DELETE', null, {
