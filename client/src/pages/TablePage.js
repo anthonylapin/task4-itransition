@@ -13,7 +13,6 @@ export const TablePage = () => {
     const { token } = useContext(AuthContext)
 
     const fetchUsersData = useCallback(async () => {
-        console.log('fetchUsersdata')
         try {
             const fetched = await request('/api/content/users', 'GET', null, {
                 Authorization: `Bearer ${token}`
@@ -28,8 +27,6 @@ export const TablePage = () => {
     }, [fetchUsersData])
 
     const toolbarHandler = async (event) => {
-        console.log('toolbarhandler');
-
         const status = event.target.name
         const method = event.target.value
         const checkedUsers = usersData.filter(user => user.isChecked)
