@@ -43,12 +43,9 @@ router.put('/users', auth, async (req, res) => {
     }
 })
 
-router.delete('/users', auth, async (req, res) => {
+router.delete('/users/:id', auth, async (req, res) => {
     try {
-        const { ids } = req.body
-
-        await User.deleteMany({ _id: { $in: ids } })
-
+        await User.deleteOne({ _id: req.params.id })
         res.status(200).json({
             message: "Success"
         })

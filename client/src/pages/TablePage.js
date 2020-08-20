@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext, useCallback } from 'react'
-import { useHistory } from 'react-router-dom'
 import { useHttp } from '../hooks/http.hook'
 import { AuthContext } from '../context/AuthContext'
 import { LoadingIndicator } from '../components/Loader'
@@ -8,7 +7,6 @@ import { Toolbar } from '../components/Toolbar'
 
 export const TablePage = () => {
     const [usersData, setUsersData] = useState([])
-    const history = useHistory()
     const auth = useContext(AuthContext)
 
     const { request, loading, clearError } = useHttp()
@@ -23,26 +21,39 @@ export const TablePage = () => {
         } catch (e) { }
     }, [token, request])
 
+
     useEffect(() => {
         fetchUsersData()
     }, [fetchUsersData])
 
     const toolbarHandler = async (event) => {
-        try {
-            const status = event.target.name
-            const method = event.target.value
-            const checkedUsers = usersData.filter(user => user.isChecked)
-            const idsOfCheckedUsers = checkedUsers.map(user => user.id)
+        console.log(event.target);
 
-            await request('/api/content/users', method, { status, ids: idsOfCheckedUsers }, {
+        const status = event.target.name
+        const method = event.target.value
+        const checkedUsers = usersData.filter(user => user.isChecked)
+        const idsOfCheckedUsers = checkedUsers.map(user => user.id)
+
+        if (method === 'DELETE') {
+            idsOfCheckedUsers.forEach(id => {
+                deleteUser(id)
+            })
+        } else {
+            await request('/api/content/users', 'PUT', { status, ids: idsOfCheckedUsers }, {
                 Authorization: `Bearer ${token}`
             })
+        }
+        if ((method === 'DELETE' || status === 'Blocked') && idsOfCheckedUsers.includes(auth.userId)) {
+            auth.logout()
+        }
 
-            if ((method === 'DELETE' || status === 'Blocked') && idsOfCheckedUsers.includes(auth.userId)) {
-                auth.logout()
-            }
-            window.location.reload(true)
-        } catch (e) { }
+        window.location.reload()
+
+    }
+    const deleteUser = async (id) => {
+        await request(`/api/content/users/${id}`, 'DELETE', null, {
+            Authorization: `Bearer ${token}`
+        })
     }
 
     useEffect(() => {

@@ -8,21 +8,21 @@ export const Toolbar = ({ handler }) => {
                 value="PUT"
                 onClick={handler}
                 className="btn btn-secondary">
-                <i className="fas fa-lock"></i>
+                Block
             </button>
             <button type="button"
                 name="Active"
                 value="PUT"
                 onClick={handler}
                 className="btn btn-secondary">
-                <i className="fas fa-unlock"></i>
+                Active
             </button>
             <button type="button"
                 name="Delete"
                 value="DELETE"
                 onClick={handler}
                 className="btn btn-secondary">
-                <i className="fas fa-trash-alt"></i>
+                Delete
             </button>
         </div>
     )
